@@ -97,8 +97,7 @@ resource "google_cloud_run_v2_service_iam_member" "public_access" {
   location = var.deployment_regions[count.index]
   name     = google_cloud_run_v2_service.client[count.index].name
   role     = "roles/run.invoker"
-  # member   = "allUsers"
-  member   = "domain:hashicorp.com"
+  member   = "allUsers"
 }
 
 # resource "google_cloud_run_v2_service_iam_binding" "binding" {
