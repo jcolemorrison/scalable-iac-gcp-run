@@ -78,17 +78,17 @@ resource "google_compute_global_forwarding_rule" "forwarding_rule" {
   load_balancing_scheme = "EXTERNAL_MANAGED"
 }
 
-resource "google_project_iam_custom_role" "public_access_role" {
-  role_id     = "publicAccessRole"
-  title       = "Public Access Role"
-  description = "A role that allows invoking permissions for Cloud Run services"
-  project     = var.gcp_project_id
-  permissions = [
-    "run.executions.cancel",
-    "run.jobs.run",
-    "run.routes.invoke"
-  ]
-}
+# resource "google_project_iam_custom_role" "public_access_role" {
+#   role_id     = "publicAccessRole"
+#   title       = "Public Access Role"
+#   description = "A role that allows invoking permissions for Cloud Run services"
+#   project     = var.gcp_project_id
+#   permissions = [
+#     "run.executions.cancel",
+#     "run.jobs.run",
+#     "run.routes.invoke"
+#   ]
+# }
 
 # Grant public access to each Cloud Run service
 # resource "google_cloud_run_v2_service_iam_member" "public_access" {
@@ -105,7 +105,8 @@ resource "google_cloud_run_v2_service_iam_binding" "binding" {
   project  = var.gcp_project_id
   location = var.deployment_regions[count.index]
   name     = google_cloud_run_v2_service.client[count.index].name
-  role     = google_project_iam_custom_role.public_access_role.id
+  # role     = google_project_iam_custom_role.public_access_role.id
+  role     = "projects/${var.gcp_project_id}/roles/CustomCloudRunInvoker"
   members = [
     "allUsers",
   ]
