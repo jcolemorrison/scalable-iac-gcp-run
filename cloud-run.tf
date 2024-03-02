@@ -79,22 +79,22 @@ resource "google_compute_global_forwarding_rule" "forwarding_rule" {
 }
 
 # Grant public access to each Cloud Run service
-# resource "google_cloud_run_v2_service_iam_member" "public_access" {
-#   count    = length(var.deployment_regions)
-#   project  = var.gcp_project_id
-#   location = var.deployment_regions[count.index]
-#   name     = google_cloud_run_v2_service.client[count.index].name
-#   role     = "roles/run.invoker"
-#   member   = "allUsers"
-# }
-
-resource "google_cloud_run_v2_service_iam_binding" "binding" {
+resource "google_cloud_run_v2_service_iam_member" "public_access" {
   count    = length(var.deployment_regions)
   project  = var.gcp_project_id
   location = var.deployment_regions[count.index]
   name     = google_cloud_run_v2_service.client[count.index].name
   role     = "roles/run.invoker"
-  members = [
-    "allUsers",
-  ]
+  member   = "allAuthenticatedUsers"
 }
+
+# resource "google_cloud_run_v2_service_iam_binding" "binding" {
+#   count    = length(var.deployment_regions)
+#   project  = var.gcp_project_id
+#   location = var.deployment_regions[count.index]
+#   name     = google_cloud_run_v2_service.client[count.index].name
+#   role     = "roles/run.invoker"
+#   members = [
+#     "allUsers",
+#   ]
+# }
