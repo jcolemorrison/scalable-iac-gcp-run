@@ -57,23 +57,6 @@ resource "google_compute_backend_service" "serverless_service" {
       group = backend.value.id
     }
   }
-
-  health_checks = [
-    google_compute_health_check.default.id
-  ]
-}
-
-# Create a health check
-resource "google_compute_health_check" "default" {
-  name                = "health-check"
-  check_interval_sec  = 1
-  timeout_sec         = 1
-  healthy_threshold   = 2
-  unhealthy_threshold = 10
-
-  http_health_check {
-    port = 80
-  }
 }
 
 # Create a URL map
