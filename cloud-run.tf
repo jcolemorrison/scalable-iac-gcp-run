@@ -59,7 +59,7 @@ resource "google_compute_backend_service" "serverless_service" {
   }
 
   health_checks = [
-    google_compute_health_check.default[0].id
+    google_compute_health_check.default.id
   ]
 }
 
