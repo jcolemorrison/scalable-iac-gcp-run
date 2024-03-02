@@ -6,7 +6,7 @@ resource "google_cloud_run_v2_service" "client" {
 
   template {
     containers {
-      image = "ghcr.io/nicholasjackson/fake-service:v0.26.0"
+      image = "nicholasjackson/fake-service:v0.26.0"
 
       env {
         name  = "MESSAGE"
