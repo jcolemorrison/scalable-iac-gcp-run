@@ -46,7 +46,6 @@ resource "google_compute_region_network_endpoint_group" "serverless_endpoints" {
 resource "google_compute_backend_service" "serverless_service" {
   name                  = "serverless-service"
   protocol              = "HTTP"
-  timeout_sec           = 10
   port_name             = "http"
   enable_cdn            = false
   load_balancing_scheme = "EXTERNAL_MANAGED"
